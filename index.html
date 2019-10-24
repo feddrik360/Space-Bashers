@@ -4,15 +4,16 @@
     <title>Phaser Game</title>
     <script type="text/javascript" src="js/phaser.min.js"></script>
     <script type="text/javascript" src="js/MainMenu.js"></script>
+    <script type="text/javascript" src="js/Instructions.js"></script>
     <script type="text/javascript" src="js/Level1.js"></script>
     <script type="text/javascript" src="js/Level2.js"></script>
     <script type="text/javascript" src="js/Level3.js"></script>
     <script type="text/javascript" src="js/Game.js"></script>
     <script type="text/javascript" src="js/entities.js"></script>
 
+
 </head>
 <body>
-
 <div id ="game"> </div>
 <style>
 
@@ -21,10 +22,8 @@
       height: 100%;
       margin: 0;
       padding: 0;
-
       overflow: hidden;
-      background-color:  #333333
-  ;
+      background-color:  #333333;
   }
   #game
   {
@@ -33,40 +32,10 @@
       margin-right: auto;
       margin-left: auto;
       padding-top:1.5%;
-
   }
-
 </style>
-
 </body>
 </html>
 
 
 
-<!-- this.enemy = this.physics.add.group({
-key: 'spaceships',
-repeat: 11,
-setXY: {x: 10, y: 20, stepX: 45},
-
-});
-
-Phaser.Actions.ScaleXY(this.enemy.getChildren(), -0.8, -0.8);
-
-let enemies = this.enemy.getChildren();
-let numEnemies = enemies.length;
-
-for (let i = 0; i < numEnemies; i++) {
-
-this.ships = this.physics.add.sprite(Phaser.Math.Between(0, 576), Phaser.Math.Between(0, 300), 'spaceship');
-//this.ships.setVelocityY(Phaser.Math.Between(0, 25));
-//  this.ships.body.setAllowGravity(false);
-this.ships.angle = 180;
-this.ships.setScale(2);
-
-
-
-
-}
-;
-
--->
