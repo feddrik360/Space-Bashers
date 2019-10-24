@@ -24,7 +24,7 @@ class Level2 extends Phaser.Scene {
         this.score = 0;
         // Adds the texts for the game.
         this.scoreText = this.add.text(16, 16, 'SCORE: ' + this.score, {fontSize: '30px', fill: '#0f0'});
-        this.clock = this.add.text(16, 55, 'TIMER: ' + this.initialTime, {fontSize: '25px', fill: '#0f0'});
+        this.clock = this.add.text(16, 55, 'TIME LEFT: ' + this.initialTime, {fontSize: '25px', fill: '#0f0'});
         this.target = this.add.text(450, 16, 'TARGET: 600', {fontSize: '30px', fill: '#0f0'});
         this.currentLevel = this.add.text(800, 16, "LEVEL: 2", {fontSize: '30px', fill: '#0f0'});
         Phaser.Display.Align.In.Center(this.target, this.add.zone(500, 35, 100, 650));
@@ -33,7 +33,6 @@ class Level2 extends Phaser.Scene {
         this.player.setCollideWorldBounds(true); // Making sure the player does not go outside of the game.
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
         // The Clock gets updated every second.
         this.time.addEvent({
             delay: 1000,
@@ -46,7 +45,6 @@ class Level2 extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
-
         // Allows the enemies to come in from the top.
         this.time.addEvent({
             delay: 2000,
@@ -57,8 +55,6 @@ class Level2 extends Phaser.Scene {
                         Phaser.Math.Between(50, this.game.config.width - 50),
                         0,
                     );
-                    this.enemy.anims.play('Saboteur-animation', true);
-                    this.SaboteurEnemies.add(this.enemy);
                 }
             },
             callbackScope: this,
@@ -73,10 +69,7 @@ class Level2 extends Phaser.Scene {
                     10,
                     Phaser.Math.Between(200, this.game.config.height - 30)
                 );
-                UfoEnemy.anims.play('Ufo-animation', true);
-                this.UfoEnemiesLeft.add(UfoEnemy);
             },
-
             callbackScope: this,
             loop: true
         });
@@ -89,8 +82,6 @@ class Level2 extends Phaser.Scene {
                     990,
                     Phaser.Math.Between(200, this.game.config.height - 30)
                 );
-                UfoEnemy.anims.play('Ufo-animation', true);
-                this.UfoEnemiesRight.add(UfoEnemy);
             },
             callbackScope: this,
             loop: true
@@ -144,7 +135,7 @@ class Level2 extends Phaser.Scene {
     }
 
     update() {
-        // Added in for a delay in the shooting
+        // Added in for a delay in the shooting.
         this.laserTimer += 1;
         if (Phaser.Input.Keyboard.JustDown(this.spacebar) && (this.laserTimer > 20)) {
             new BEAM(this);
@@ -153,20 +144,14 @@ class Level2 extends Phaser.Scene {
         // Player movements.
         if (this.cursors.left.isDown) {
             this.player.x -= 5;
-            //this.player.anims.play('main_ship', true);
         } else if (this.cursors.right.isDown) {
             this.player.x += 5;
-            //  this.player.anims.play('main_ship', true);
         } else if (this.cursors.up.isDown) {
             this.player.y -= 5;
-            //this.player.anims.play('main_ship', true);
         } else if (this.cursors.down.isDown) {
             this.player.y += 5;
-            //this.player.anims.play('main_ship', true);
         }
-
         // To make sure that things dont go outside of the game and cause performance issues.
-
         for (var i = 0; i < this.playerLasers.getChildren().length; i++) {
             var laser = this.playerLasers.getChildren()[i];
             if (laser.y < 32) {
@@ -198,17 +183,13 @@ class Level2 extends Phaser.Scene {
                 enemies.destroy();
             }
         }
-
-
     }
 
     // Causes the timer to go down and update the timer on screen.
     clockDown() {
         this.initialTime -= 1;
-        this.clock.setText('TIMER: ' + this.initialTime);
-
-        // When the timer finishes.
-        if (this.initialTime === 0 && this.score >= 600) {
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
+        if (this.score >= 600) {
             this.NextLevel();
         } else if (this.initialTime === 0 && this.score < 600) {
             this.gameOver();
@@ -217,6 +198,8 @@ class Level2 extends Phaser.Scene {
 
     // When the player loses.
     gameOver() {
+        this.score = 0;
+        this.scoreText.setText('SCORE: ' + this.score);
         this.player.destroy();
         this.gameover = this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', {
             fontSize: '100px',
@@ -232,10 +215,9 @@ class Level2 extends Phaser.Scene {
             callbackScope: this,
             loop: false
         });
-
     }
 
-    // When the player goes on to the next level
+    // When the player goes on to the next level.
     NextLevel() {
         this.player.destroy();
         this.passLevel = this.add.text(game.config.width / 2, game.config.height / 2, 'YOU HAVE PASSED LEVEL 2!', {
@@ -243,6 +225,8 @@ class Level2 extends Phaser.Scene {
             fill: '#0f0',
             align: 'center',
         });
+        this.initialTime = 0;
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
         const NextLevel = this.add.text(0, 0, "CLICK HERE FOR THE NEXT LEVEL", {
             fontSize: '35px',
             fill: '#0f0',
@@ -278,8 +262,6 @@ class Level2 extends Phaser.Scene {
         Phaser.Display.Align.In.Center(this.passLevel, this.add.zone(500, 250, 100, 650));
         Phaser.Display.Align.In.Center(NextLevel, this.add.zone(500, 350, 100, 650));
         Phaser.Display.Align.In.Center(ReturnToMain, this.add.zone(500, 400, 100, 650));
-
-
     }
 
     // The points to increase every time one of the enemies gets destroyed.

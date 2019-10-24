@@ -1,7 +1,6 @@
 class Level3 extends Phaser.Scene {
     constructor() {
         super("playGame2");
-
     }
 
     create() {
@@ -19,12 +18,12 @@ class Level3 extends Phaser.Scene {
         this.enemyLasers = this.add.group();
         // The timers.
         this.laserTimer = 0;
-        this.initialTime = 15;
+        this.initialTime = 90;
         // The timers.
         this.score = 0;
         // Adds the texts for the game.
         this.scoreText = this.add.text(16, 16, 'SCORE: ' + this.score, {fontSize: '30px', fill: '#0f0'});
-        this.clock = this.add.text(16, 55, 'TIMER: ' + this.initialTime, {fontSize: '25px', fill: '#0f0'});
+        this.clock = this.add.text(16, 55, 'TIME LEFT: ' + this.initialTime, {fontSize: '25px', fill: '#0f0'});
         this.target = this.add.text(450, 16, 'TARGET: 750', {fontSize: '30px', fill: '#0f0'});
         this.currentLevel = this.add.text(800, 16, "LEVEL: 3", {fontSize: '30px', fill: '#0f0'});
         Phaser.Display.Align.In.Center(this.target, this.add.zone(500, 35, 100, 650));
@@ -54,8 +53,6 @@ class Level3 extends Phaser.Scene {
                         Phaser.Math.Between(50, this.game.config.width - 50),
                         0,
                     );
-                    this.enemy.anims.play('Lightning-animation', true);
-                    this.LightningEnemies.add(this.enemy);
                 }
             },
             callbackScope: this,
@@ -70,10 +67,7 @@ class Level3 extends Phaser.Scene {
                     10,
                     Phaser.Math.Between(200, this.game.config.height - 30)
                 );
-                UfoEnemy.anims.play('Ufo-animation', true);
-                this.UfoEnemiesLeft.add(UfoEnemy);
             },
-
             callbackScope: this,
             loop: true
         });
@@ -86,8 +80,6 @@ class Level3 extends Phaser.Scene {
                     990,
                     Phaser.Math.Between(200, this.game.config.height - 30)
                 );
-                UfoEnemy.anims.play('Ufo-animation', true);
-                this.UfoEnemiesRight.add(UfoEnemy);
             },
             callbackScope: this,
             loop: true
@@ -135,12 +127,11 @@ class Level3 extends Phaser.Scene {
             UfoEnemy.destroy();
             this.IncreaseScore(5);
         }, null, this);
-
     }
 
     update() {
         this.laserTimer += 1;
-        // Added in for a delay in the shooting
+        // Added in for a delay in the shooting.
         if (Phaser.Input.Keyboard.JustDown(this.spacebar) && (this.laserTimer > 20)) {
             new BEAM(this);
             this.laserTimer = 0;
@@ -148,16 +139,12 @@ class Level3 extends Phaser.Scene {
         // Player movements.
         if (this.cursors.left.isDown) {
             this.player.x -= 5;
-            //this.player.anims.play('main_ship', true);
         } else if (this.cursors.right.isDown) {
             this.player.x += 5;
-            //  this.player.anims.play('main_ship', true);
         } else if (this.cursors.up.isDown) {
             this.player.y -= 5;
-            //this.player.anims.play('main_ship', true);
         } else if (this.cursors.down.isDown) {
             this.player.y += 5;
-            //this.player.anims.play('main_ship', true);
         }
         // To make sure that things dont go outside of the game and cause performance issues.
         for (var i = 0; i < this.playerLasers.getChildren().length; i++) {
@@ -172,7 +159,6 @@ class Level3 extends Phaser.Scene {
                 enemyLaser.destroy();
             }
         }
-
         for (var g = 0; g < this.UfoEnemiesLeft.getChildren().length; g++) {
             var Ufo = this.UfoEnemiesLeft.getChildren()[g];
             if (Ufo.x > game.config.width - 25) {
@@ -193,25 +179,27 @@ class Level3 extends Phaser.Scene {
         }
     }
 
+    // Causes the timer to go down and update the timer on screen.
     clockDown() {
         this.initialTime -= 1;
-        this.clock.setText('TIMER: ' + this.initialTime);
-        if (this.initialTime === 0 && this.score >= 30) {
-            this.GameVictory()
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
+        if (this.score >= 30) {
+            this.GameVictory();
         } else if (this.initialTime === 0 && this.score < 30) {
-            this.gameOver()
+            this.gameOver();
         }
     }
 
     gameOver() {
+        this.score = 0;
+        this.scoreText.setText('SCORE: ' + this.score);
         this.player.destroy();
-        this.gameover = this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER"', {
+        this.gameover = this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', {
             fontSize: '100px',
             fill: '#ff4d4d',
             align: 'center',
         });
         Phaser.Display.Align.In.Center(this.gameover, this.add.zone(500, 325, 100, 650));
-        Phaser.Display.Align.In.Center(this.gameover, this.add.zone(400, 300, 800, 600));
         this.time.addEvent({
             delay: 10000,
             callback: function () {
@@ -234,6 +222,8 @@ class Level3 extends Phaser.Scene {
             fill: '#0f0',
             align: 'center',
         });
+        this.initialTime = 0;
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
         const ReturnToMain = this.add.text(0, 0, "CLICK HERE TO EXIT", {
             fontSize: '35px',
             fill: '#0f0',
@@ -252,7 +242,5 @@ class Level3 extends Phaser.Scene {
         });
         Phaser.Display.Align.In.Center(this.passLevel, this.add.zone(500, 250, 100, 650));
         Phaser.Display.Align.In.Center(ReturnToMain, this.add.zone(500, 400, 100, 650));
-
-
     }
 }

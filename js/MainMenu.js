@@ -4,6 +4,7 @@ class MainMenu extends Phaser.Scene {
     }
 
     preload() {
+        this.load.text('GameText','gameText.txt');
         this.load.image('background', 'assets/starfield.png');
         this.load.image('meteor', 'assets/meteorite.png');
         this.load.image('planet', 'assets/space-planet.png');
@@ -102,6 +103,9 @@ class MainMenu extends Phaser.Scene {
         helloButton.on("pointerout", function () {
             helloButton.setStyle({fill: '#0f0'});
         });
+        instructions.on("pointerdown", function () {
+            this.scene.start("Instructionss");
+        }, this);
         instructions.on("pointerover", function () {
             instructions.setStyle({fill: '#ff0'});
         }, this);
