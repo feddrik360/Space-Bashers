@@ -137,7 +137,7 @@ class Level2 extends Phaser.Scene {
     update() {
         // Added in for a delay in the shooting.
         this.laserTimer += 1;
-        if (Phaser.Input.Keyboard.JustDown(this.spacebar) && (this.laserTimer > 20)) {
+        if (Phaser.Input.Keyboard.JustDown(this.spacebar) && (this.laserTimer > 20) && (this.initialTime > 0)) {
             new BEAM(this);
             this.laserTimer = 0;
         }
@@ -266,7 +266,9 @@ class Level2 extends Phaser.Scene {
 
     // The points to increase every time one of the enemies gets destroyed.
     IncreaseScore(points) {
-        this.score += points;
-        this.scoreText.setText('SCORE: ' + this.score);
+        if (this.initialTime > 0) {
+            this.score += points;
+            this.scoreText.setText('SCORE: ' + this.score);
+        }
     }
 }

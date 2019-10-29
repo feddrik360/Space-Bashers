@@ -1,7 +1,5 @@
 var config = {
-    type: Phaser.webGL, //set Phaser to Auto, rather than webGL or Canvas
-    // width: this.window.innerWidth * this.window.devicePixelRatio, //sets the game viewport width
-    //height: this.window.innerHeight * this.window.devicePixelRatio, //sets the game viewport height
+    type: Phaser.webGL,
     width: 1000,
     height: 650,
     backgroundColor: 0x000000,

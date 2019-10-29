@@ -132,7 +132,7 @@ class Level3 extends Phaser.Scene {
     update() {
         this.laserTimer += 1;
         // Added in for a delay in the shooting.
-        if (Phaser.Input.Keyboard.JustDown(this.spacebar) && (this.laserTimer > 20)) {
+        if (Phaser.Input.Keyboard.JustDown(this.spacebar) && (this.laserTimer > 20) && (this.initialTime > 0)) {
             new BEAM(this);
             this.laserTimer = 0;
         }
@@ -183,9 +183,9 @@ class Level3 extends Phaser.Scene {
     clockDown() {
         this.initialTime -= 1;
         this.clock.setText('TIME LEFT: ' + this.initialTime);
-        if (this.score >= 30) {
+        if (this.score >= 750) {
             this.GameVictory();
-        } else if (this.initialTime === 0 && this.score < 30) {
+        } else if (this.initialTime === 0 && this.score < 750) {
             this.gameOver();
         }
     }
@@ -211,8 +211,10 @@ class Level3 extends Phaser.Scene {
     }
 
     IncreaseScore(points) {
-        this.score += points;
-        this.scoreText.setText('SCORE: ' + this.score);
+        if (this.initialTime > 0) {
+            this.score += points;
+            this.scoreText.setText('SCORE: ' + this.score);
+        }
     }
 
     GameVictory() {
