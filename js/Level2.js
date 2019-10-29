@@ -199,6 +199,8 @@ class Level2 extends Phaser.Scene {
     // When the player loses.
     gameOver() {
         this.score = 0;
+        this.initialTime = 0;
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
         this.scoreText.setText('SCORE: ' + this.score);
         this.player.destroy();
         this.gameover = this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', {
@@ -219,6 +221,8 @@ class Level2 extends Phaser.Scene {
 
     // When the player goes on to the next level.
     NextLevel() {
+        this.initialTime = 0;
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
         this.player.destroy();
         this.passLevel = this.add.text(game.config.width / 2, game.config.height / 2, 'YOU HAVE PASSED LEVEL 2!', {
             fontSize: '60px',

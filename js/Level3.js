@@ -192,6 +192,8 @@ class Level3 extends Phaser.Scene {
 
     gameOver() {
         this.score = 0;
+        this.initialTime = 0;
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
         this.scoreText.setText('SCORE: ' + this.score);
         this.player.destroy();
         this.gameover = this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', {
@@ -218,6 +220,8 @@ class Level3 extends Phaser.Scene {
     }
 
     GameVictory() {
+        this.initialTime = 0;
+        this.clock.setText('TIME LEFT: ' + this.initialTime);
         this.player.destroy();
         this.passLevel = this.add.text(game.config.width / 2, game.config.height / 2, 'YOU HAVE WON!', {
             fontSize: '100px',
