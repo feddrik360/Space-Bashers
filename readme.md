@@ -29,6 +29,10 @@
 >that increase with intensity so that
 >the players can test their abilities and feel a sense of satisfaction once they have completed the game.  
 
+
+
+
+
 ###Testing
 - I have completed extensive testing of my game on a variety of different browsers such as Google Chrome,
 Microsoft Edge, Firefox and Safari.
