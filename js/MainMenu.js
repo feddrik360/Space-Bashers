@@ -4,7 +4,7 @@ class MainMenu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.text('GameText','gameText.txt');
+        this.load.text('GameText', 'gameText.txt');
         this.load.image('background', 'assets/starfield.png');
         this.load.image('meteor', 'assets/meteorite.png');
         this.load.image('planet', 'assets/space-planet.png');
@@ -119,5 +119,4 @@ class MainMenu extends Phaser.Scene {
         Phaser.Display.Align.In.Center(this.planet, this.add.zone(245, 460, 100, 650));
         Phaser.Display.Align.In.Center(this.spaceRing, this.add.zone(800, 125, 100, 650));
     }
-
 }

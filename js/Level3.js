@@ -19,7 +19,7 @@ class Level3 extends Phaser.Scene {
         // The timers.
         this.laserTimer = 0;
         this.initialTime = 90;
-        // The timers.
+        // Keeps the score.
         this.score = 0;
         // Adds the texts for the game.
         this.scoreText = this.add.text(16, 16, 'SCORE: ' + this.score, {fontSize: '30px', fill: '#0f0'});

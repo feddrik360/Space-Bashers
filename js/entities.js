@@ -73,12 +73,3 @@ class BEAM2 extends Entity {
         this.angle = 180; // To turn the beam upside down.
     }
 }
-
-
-
-
-
-
-
-
-
